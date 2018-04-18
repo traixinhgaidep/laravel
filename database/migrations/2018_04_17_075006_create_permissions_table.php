@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermisisonsTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePermisisonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permisisons', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('description');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreatePermisisonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permisisons');
+        Schema::dropIfExists('permissions');
     }
 }
