@@ -12,5 +12,24 @@ class Category extends Model
         'description',
         'slug',
     ];
-
+    /**
+     * Return categories view
+     *
+     * @param obj $categories
+     * @return string
+     */
+    public static function showCategories($categories, $cateSelected = null)
+    {
+        if ($categories) {
+            $html = '';
+            foreach ($categories as $category) {
+                $html .= "<option";
+                if ($category->id == $cateSelected) {
+                    $html .= ' selected';
+                };
+                $html .= " value='" . $category->id . "' >$category->name</option>";
+            }
+            return $html;
+        }
+    }
 }
