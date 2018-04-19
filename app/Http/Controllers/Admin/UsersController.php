@@ -89,13 +89,15 @@ class UsersController extends Controller
         $user->email = $request->email;
         $password = Help::generateRandomString();
         $user->password = Hash::make($password);
+        if (!$id) {
+            $data=[];
+            $data['email']= $request->email;
+            $data['password']= $password;
+            $data['name']= $request->name;
+            $data['roles']= $user->roles()->get()->pluck('name');
+            EmailController::sendMail($data);
+        }
 
-        $data=[];
-        $data['email']= $request->email;
-        $data['password']= $password;
-        $data['name']= $request->name;
-        $data['roles']= $user->roles()->get()->pluck('name');
-        EmailController::sendMail($data);
 
         $user->save();
         $user->roles()->sync($request->input('roles'));
