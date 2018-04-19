@@ -58,7 +58,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id' => '8',
                 'name' => 'role-delete',
-                'description' => 'Delete-role',
+                'description' => 'Delete role',
                 'created_at' => Carbon::now(),
             ],
             [
@@ -70,7 +70,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id' => '10',
                 'name' => 'category-create',
-                'description' => '',
+                'description' => 'Create Category',
                 'created_at' => Carbon::now(),
             ],
             [
@@ -82,7 +82,43 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id' => '12',
                 'name' => 'category-delete',
-                'description' => 'Delete-category',
+                'description' => 'Delete category',
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'id' => '13',
+                'name' => 'article-publish',
+                'description' => 'Publish article',
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'id' => '14',
+                'name' => 'article-list',
+                'description' => 'Show list article',
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'id' => '15',
+                'name' => 'article-edit',
+                'description' => 'Edit article',
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'id' => '16',
+                'name' => 'article-delete',
+                'description' => 'Delete article',
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'id' => '17',
+                'name' => 'article-create',
+                'description' => 'Create article',
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'id' => '18',
+                'name' => 'article-confirm',
+                'description' => 'Confirm article',
                 'created_at' => Carbon::now(),
             ],
 
