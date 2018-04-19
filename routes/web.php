@@ -19,7 +19,7 @@ Auth::routes();
 
 
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
-    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
+    Route::get('/', 'Admin\AdminController@index')->name('admin.index')->middleware('firstlogin');
     Route::group(['prefix' => 'category','middleware' => 'role:root'],function (){
         Route::get('', 'Admin\CategoryController@index')->name('admin.category.index')->middleware('can:category-list');
         Route::get('create','Admin\CategoryController@create')->name('admin.category.create')->middleware('can:category-create');
@@ -61,6 +61,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
         Route::get('edit/{id}', 'Admin\UsersController@edit')->name('admin.user.edit')->middleware('can:user-edit');
         Route::delete('/{id}', 'Admin\UsersController@destroy')->name('admin.user.destroy')->middleware('can:user-destroy');
     });
+    Route::get('change-password', 'Admin\UsersController@getViewChangePassword')->name('admin.user.getviewchangepassword');
+    Route::post('change-password', 'Admin\UsersController@changePassword')->name('admin.user.changepassword');
+
     Route::prefix('send-mail')->group(function (){
         Route::get('','HomeController@sendMail')->name('admin.emails.email');
 

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Help\Help;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Email\EmailController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Role;
+use Auth;
+use Mail;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -19,7 +21,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->paginate(5);
+        $users = User::with('roles')->paginate(10);
         return view('admin.users.index', ['users' => $users]);
 
     }
@@ -87,11 +89,15 @@ class UsersController extends Controller
         $user->email = $request->email;
         $password = Help::generateRandomString();
         $user->password = Hash::make($password);
+        if (!$id) {
+            $data=[];
+            $data['email']= $request->email;
+            $data['password']= $password;
+            $data['name']= $request->name;
+            $data['roles']= $user->roles()->get()->pluck('name');
+            EmailController::sendMail($data);
+        }
 
-        $data=[];
-        $data['email']= $request->email;
-        $data['password']= $password;
-        HomeController::sendMail($data);
 
         $user->save();
         $user->roles()->sync($request->input('roles'));
@@ -153,15 +159,56 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $target = User::find($id);
-        if ($target) {
-            $target->delete();
+        $success = true;
+
+        DB::beginTransaction();
+
+        try{
+
+            // Your Code
+
+
+
+            $targets = User::whereIn('id', $request->checkbox)->get();
+            foreach($targets as $target){
+                if ($target) {
+//                    dd($target);
+                    $target->delete();
+                }
+            }
+            DB::commit();
+
+        }catch(\Exception $e){
+
+            DB::rollback();
+
+            $success = false;
+
+        }
+
+        if($success){
             return redirect()->route('admin.user.index')
                 ->with('success', 'User has been deleted successfully');
         }
-        return redirect()->route('admin.user.index')
-            ->with('error', 'User not found');
+
+        else{
+            return redirect()->route('admin.user.index')
+                ->with('error', 'User not found');
+        }
+    }
+    public function getViewChangePassword() {
+        //dd('controller1');
+        return view('auth.passwords.change_password',['user' => Auth::user()]);
+    }
+    public function changePassword(Request $request) {
+        //dd('controller2');
+        $user = Auth::user();
+        $user->password  = Hash::make($request->password);
+        $user->first_login = true;
+
+        $user->save();
+        return redirect()->route('admin.index');
     }
 }
