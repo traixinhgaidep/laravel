@@ -12,7 +12,7 @@
                     <div class="panel-body">
                         <div>
                             <a href="{{ route('admin.category.create') }}">
-                                <button type="button" class="btn btn-success btn-xs">New Category</button>
+                                <button type="button" class="btn btn-success">New Category</button>
                             </a>
                         </div>
                        <table class="table table-striped task-table">

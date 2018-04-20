@@ -13,7 +13,7 @@
 
                         <div>
                             <a href="{{ route('admin.user.create') }}">
-                                <button type="button" class="btn btn-success btn-xs">Create New User</button>
+                                <button type="button" class="btn btn-success">Create New User</button>
                             </a>
                         </div>
                         <form class="" action="{{ route('admin.user.destroy') }}" method="POST">
@@ -38,7 +38,7 @@
                                         </td>
                                         <td class="table-text">
                                         @foreach($user->roles as $role)
-                                        <p>{{$role->name}}</p>
+                                                <label class="label label-success">{{$role->name}}</label>
                                         @endforeach
                                         </td>
 

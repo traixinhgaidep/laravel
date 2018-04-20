@@ -12,7 +12,7 @@
                     <div class="panel-body">
                         <div>
                             <a href="{{ route('admin.permission.create') }}">
-                                <button type="button" class="btn btn-success btn-xs">New Permission</button>
+                                <button type="button" class="btn btn-success">New Permission</button>
                             </a>
                         </div>
                        <table class="table table-striped task-table">

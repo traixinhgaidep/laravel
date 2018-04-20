@@ -39,7 +39,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
         Route::get('create','Admin\RoleController@create')->name('admin.role.create')->middleware('can:role-create');
         Route::post('create', 'Admin\RoleController@createRole')-> name('admin.role.createRole');
         Route::get('edit/{id}', 'Admin\RoleController@edit')->name('admin.role.edit')->middleware('can:role-edit');
-        Route::delete('/{id}', 'Admin\RoleController@destroy')->name('admin.role.destroy')->middleware('can:role-destroy');
+        Route::delete('', 'Admin\RoleController@destroy')->name('admin.role.delete')->middleware('can:role-delete');
 
     });
     Route::group(['prefix' => 'articles'] ,function (){
