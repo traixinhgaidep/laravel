@@ -121,6 +121,12 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Confirm article',
                 'created_at' => Carbon::now(),
             ],
+            [
+                'id' => '19',
+                'name' => 'article-reject',
+                'description' => 'Confirm article',
+                'created_at' => Carbon::now(),
+            ],
 
         ];
         DB::table('permissions')->delete();
