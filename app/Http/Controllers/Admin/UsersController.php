@@ -22,7 +22,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->paginate(5);
+        $users = User::with('roles')->paginate(User::LIMIT_PAGE);
         $count = User::count();
         return view('admin.users.index', ['users' => $users, 'count' => $count]);
 
