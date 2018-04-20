@@ -59,7 +59,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
         Route::get('create','Admin\UsersController@create')->name('admin.user.create')->middleware('can:user-create');
         Route::post('create', 'Admin\UsersController@createUser')-> name('admin.user.createUser');
         Route::get('edit/{id}', 'Admin\UsersController@edit')->name('admin.user.edit')->middleware('can:user-edit');
-        Route::delete('/{id}', 'Admin\UsersController@destroy')->name('admin.user.destroy')->middleware('can:user-destroy');
+        Route::delete('', 'Admin\UsersController@destroy')->name('admin.user.destroy')->middleware('can:user-delete');
     });
     Route::get('change-password', 'Admin\UsersController@getViewChangePassword')->name('admin.user.getviewchangepassword');
     Route::post('change-password', 'Admin\UsersController@changePassword')->name('admin.user.changepassword');

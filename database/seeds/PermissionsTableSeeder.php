@@ -33,7 +33,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => '4',
-                'name' => 'delete-user',
+                'name' => 'user-delete',
                 'description' => 'Delete user',
                 'created_at' => Carbon::now(),
             ],
