@@ -10,6 +10,7 @@ use App\User;
 use App\Role;
 use Auth;
 use Mail;
+use DB;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -21,8 +22,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->paginate(10);
-        return view('admin.users.index', ['users' => $users]);
+        $users = User::with('roles')->paginate(User::LIMIT_PAGE);
+        $count = User::count();
+        return view('admin.users.index', ['users' => $users, 'count' => $count]);
 
     }
 
@@ -68,13 +70,13 @@ class UsersController extends Controller
         $id  = $request->id;
         if ($id) {
             $request->validate([
-                'name' => "required|max:255|unique:users,name,$id,id",
-                'email'=>"required",
+                'email' => "required|max:255|unique:users,email,$id,id,deleted_at,NULL",
+                'name'=>"required|max:255",
             ]);
         } else {
             $request->validate([
-                'name' => "required|max:255|unique:categories,name,NULL,id",
-                'email'=>"required",
+                'email' => "required|max:255|unique:users,email,NULL,id,deleted_at,NULL",
+                'name'=>"required|max:255",
             ]);
         }
         if ($id) {
@@ -89,6 +91,9 @@ class UsersController extends Controller
         $user->email = $request->email;
         $password = Help::generateRandomString();
         $user->password = Hash::make($password);
+
+        $user->save();
+        $user->roles()->sync($request->input('roles'));
         if (!$id) {
             $data=[];
             $data['email']= $request->email;
@@ -98,13 +103,9 @@ class UsersController extends Controller
             EmailController::sendMail($data);
         }
 
-
-        $user->save();
-        $user->roles()->sync($request->input('roles'));
         if (!$user->save()) {
             return redirect()->route('admin.user.index')->with('error', 'An error occurred, user has not been saved.');
         }
-
 
         return redirect()->route('admin.user.index')->with('success', 'User has been save successfully.');
     }

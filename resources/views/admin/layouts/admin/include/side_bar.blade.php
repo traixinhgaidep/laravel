@@ -14,6 +14,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Menu</li>
+            @role('root')
             <li class="{{ (Route::current() == 'admin/users')? 'active' : '' }}">
                 <a href="{{route('admin.user.index')}}">
                     <i class="fa fa-user-plus"></i> <span>Users management</span>
@@ -29,6 +30,7 @@
                     <i class="fa fa-user-plus"></i> <span>Role management</span>
                 </a>
             </li>
+            @endrole
             <li class="{{ (Route::current() == 'amdin/articles')? 'active' : '' }}">
                 <a href="{{route('admin.article.index')}}">
                     <i class="fa fa-image"></i> <span>Articles management</span>
