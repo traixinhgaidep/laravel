@@ -9,9 +9,27 @@
                         <h3>Roles</h3>
                     </div>
 
-                    <div class="panel-body">
+
+                    <div class="panel-body" style="margin: 5px">
+
+                        @if (session('success'))
+                            <div class="alert alert-success fade in">
+                                <button class="close" data-dismiss="alert">×</button>
+                                <i class="fa-fw fa fa-check"></i>
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger fade in">
+                                <button class="close" data-dismiss="alert">×</button>
+                                <i class="fa fa-times"></i>
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+
                         <div>
-                            <a href="{{ route('admin.role.create') }}">
+                            <a href='{{route('admin.role.create') }}'>
                                 <button type="button" class="btn btn-success btn-xs">New Role</button>
                             </a>
                         </div>

@@ -20,6 +20,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::with('permissions')->paginate(Role::PAGINATE_LIMIT);
+        var_dump(gettype($roles));
+        var_dump(gettype(2));
+        ;die();
         return view('admin.role.index', ['roles' => $roles]);
     }
 
