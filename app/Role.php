@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
+    use SoftDeletes;
     const PAGINATE_LIMIT = 5;
     protected $fillable = ['name', 'slug', 'permission'];
 

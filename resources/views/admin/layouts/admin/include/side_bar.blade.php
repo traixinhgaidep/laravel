@@ -14,23 +14,27 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Menu</li>
+            @role('root')
             <li class="{{ (Route::current() == 'admin/users')? 'active' : '' }}">
-                <a href="#">
+                <a href="{{route('admin.user.index')}}">
                     <i class="fa fa-user-plus"></i> <span>Users management</span>
                 </a>
             </li>
             <li class="{{ (Route::current() == 'admin/category')? 'active' : '' }}">
-                <a href="#">
+                <a href="{{route('admin.category.index')}}">
                     <i class="fa fa-newspaper-o"></i> <span>Category management</span>
                 </a>
             </li>
             <li class="{{ (Route::current() == 'admin/role')? 'active' : '' }}">
-                <a href="<?php  echo route('admin.role.index') ?>">
+
+                <a href="{{route('admin.role.index')}}">
+
                     <i class="fa fa-user-plus"></i> <span>Role management</span>
                 </a>
             </li>
+            @endrole
             <li class="{{ (Route::current() == 'amdin/articles')? 'active' : '' }}">
-                <a href="#">
+                <a href="{{route('admin.article.index')}}">
                     <i class="fa fa-image"></i> <span>Articles management</span>
                 </a>
             </li>

@@ -31,14 +31,19 @@
                         <div>
                             <a href='{{route('admin.role.create') }}'>
                                 <button type="button" class="btn btn-success btn-xs">New Role</button>
+
                             </a>
                         </div>
+                        <form class="" action="{{ route('admin.role.delete') }}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                        <table class="table table-striped task-table">
                            <thead>
                                 <th>Id</th>
                                 <th>Name</th>
                                 <th>Permission</th>
                                 <th>Action</th>
+                                <th><input  type="checkbox" class="selectall">  Check All</th>
                            </thead>
                            <tbody>
                                 @foreach($roles as $role)
@@ -60,17 +65,15 @@
                                             <a href="{{ route('admin.role.edit', $role->id) }}">
                                                 <button type="button" class="btn btn-primary btn-xs">Edit</button>
                                             </a>
-                                            <form class="delete visible-lg-inline-block" action="{{ route('admin.role.destroy', $role->id) }}" method="POST">
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                                <input class="btn btn-danger btn-xs" type="submit" onclick="return confirm('Are you sure you want to delete this item?');" value="Delete">
-                                            </form>
                                         </td>
+                                        <td> <input class="individual" name="checkbox[]" type="checkbox" value="{{$role -> id}}"></td>
                                     </tr>
                                 @endforeach
                            </tbody>
                        </table>
-                        <div class="text-center">
+                            <input class="btn btn-danger"  disabled type="submit" onclick="return confirm('Are you sure you want to delete this item?');" value="Delete" style="margin-right: 75px; float: right;">
+                        </form>
+                            <div class="text-center">
                             {{ $roles->render() }}
                         </div>
                     </div>
@@ -78,4 +81,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script src="{{ asset('js/backend/user_list.js') }}"></script>
 @endsection

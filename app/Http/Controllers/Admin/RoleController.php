@@ -8,6 +8,7 @@ use App\Role;
 use App\Permission;
 use App\Help\Help;
 use App\User;
+use DB;
 use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
@@ -124,15 +125,43 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $target = Role::find($id);
-        if ($target) {
-            $target->delete();
+        $success = true;
+
+        DB::beginTransaction();
+
+        try{
+
+            // Your Code
+
+
+
+            $targets = Role::whereIn('id', $request->checkbox)->get();
+            foreach($targets as $target){
+                if ($target) {
+//                    dd($target);
+                    $target->delete();
+                }
+            }
+            DB::commit();
+
+        }catch(\Exception $e){
+
+            DB::rollback();
+
+            $success = false;
+
+        }
+
+        if($success){
             return redirect()->route('admin.role.index')
                 ->with('success', 'Role has been deleted successfully');
         }
-        return redirect()->route('admin.role.index')
-            ->with('error', 'Role not found');
+
+        else{
+            return redirect()->route('admin.role.index')
+                ->with('error', 'Role not found');
+        }
     }
 }

@@ -10,7 +10,7 @@
                 @can('article-create')
                     <div>
                         <a href="{{ route('admin.article.create') }}">
-                            <button type="button" class="btn btn-success btn-xs">New Article</button>
+                            <button type="button" class="btn btn-success">New Article</button>
                         </a>
                     </div>
                 @endcan
@@ -36,8 +36,8 @@
                     <th>Id</th>
                     <th>Title</th>
                     <th>Category</th>
-                    <th>Published</th>
-                    <th>Created Time</th>
+                    <th>Author</th>
+                    <th>Updated Time</th>
                     </thead>
                     <tbody>
                     @foreach($articles as $article)
@@ -69,7 +69,7 @@
                                 <div> {{ $article->published }}</div>
                             </td>
                             <td class="table-text">
-                                <div>{{$article->created_at}}</div>
+                                <div>{{$article->update_at}}</div>
                             </td>
                             <td>
                                 @can('article-delete')
