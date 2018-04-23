@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -44,8 +45,15 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function isRoot() {
+
+        if ($this->roles->contains('slug', 'root')){
+            return true;
+        }
+        return false;
+    }
     public function hasPermissionTo($permission) {
-        return $this->hasPermissionThroughRole($permission);
+        return $this->hasPermissionThroughRole($permission) || $this->isRoot();
     }
 
     public function hasPermissionThroughRole($permission) {
