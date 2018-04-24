@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Help;
+use App\Help\Help;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Article;
 use App\Category;
 use Auth;
+use DB;
 
 class ArticleController extends Controller
 {
@@ -159,6 +160,7 @@ class ArticleController extends Controller
             $article = null;
             $cateId = null;
         }
+
         return view('admin.article.create', [
             'article' => $article,
             'categoriesHtml' => Category::showCategories(Category::all(), old('category', $cateId)),
@@ -204,15 +206,58 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+//    public function destroy($id)
+//    {
+//        $target = Article::find($id);
+//        if ($target) {
+//            $target->delete();
+//            return redirect()->route('admin.article.index')
+//                ->with('success', 'Article has been deleted successfully');
+//        }
+//        return redirect()->route('admin.article.index')
+//            ->with('error', 'Article not found');
+//    }
+
+    public function destroy(Request $request)
     {
-        $target = Article::find($id);
-        if ($target) {
-            $target->delete();
+//        dd($request);
+        $success = true;
+
+        DB::beginTransaction();
+
+        try{
+
+            // Your Code
+
+
+
+            $targets = Article::whereIn('id', $request->checkbox)->get();
+            foreach($targets as $target){
+                if ($target) {
+//                    dd($target);
+                    $target->delete();
+                }
+            }
+            DB::commit();
+
+        }catch(\Exception $e){
+
+            DB::rollback();
+
+            $success = false;
+
+        }
+
+        if($success){
             return redirect()->route('admin.article.index')
                 ->with('success', 'Article has been deleted successfully');
         }
-        return redirect()->route('admin.article.index')
-            ->with('error', 'Article not found');
+
+        else{
+            return redirect()->route('admin.article.index')
+                ->with('error', 'Article not found');
+        }
     }
+
+
 }

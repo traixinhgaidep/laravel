@@ -26,7 +26,9 @@
                 </a>
             </li>
             <li class="{{ (Route::current() == 'admin/role')? 'active' : '' }}">
+
                 <a href="{{route('admin.role.index')}}">
+
                     <i class="fa fa-user-plus"></i> <span>Role management</span>
                 </a>
             </li>

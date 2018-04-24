@@ -24,8 +24,8 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'id' => '2',
-                'name' => 'secrectory',
-                'email' => 'secrectory@gmail.com',
+                'name' => 'secrectary',
+                'email' => 'secrectary@gmail.com',
                 'password' =>  Hash::make('123456'),
                 'first_login' => false,
                 'created_at' => Carbon::now(),

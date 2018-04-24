@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return view('home');
+});
+
 Auth::routes();
 
 
@@ -47,7 +51,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
         Route::get('create','Admin\ArticleController@create')->name('admin.article.create')->middleware('can:article-create');
         Route::post('create', 'Admin\ArticleController@createArticle')->name('admin.article.createArticle');
         Route::get('edit/{id}', 'Admin\ArticleController@edit')->name('admin.article.edit')->middleware('can:article-edit');
-        Route::delete('/{id}', 'Admin\ArticleController@destroy')->name('admin.article.destroy')->middleware('can:article-delete');
+        Route::delete('', 'Admin\ArticleController@destroy')->name('admin.article.destroy')->middleware('can:article-delete');
         Route::post('/reject/{id}','Admin\ArticleController@reject')->name('admin.article.reject')->middleware('can:article-reject');
         Route::post('/confirm/{id}','Admin\ArticleController@confirm')->name('admin.article.confirm')->middleware('can:article-confirm');
         Route::post('/publish/{id}','Admin\ArticleController@publish')->name('admin.article.publish')->middleware('can:article-publish');

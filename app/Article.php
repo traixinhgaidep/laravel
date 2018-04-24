@@ -31,9 +31,11 @@ class Article extends Model
      */
     public static function getIndex($search = null, $categoryId = null)
     {
-        $query = Article::select('articles.*', 'categories.name')
-            ->join('categories', 'articles.category_id', '=', 'categories.id');
-        if (!empty($categoryId)) {
+        $query = Article::select('articles.*', 'categories.name as category', 'users.name as author')
+            ->join('categories', 'articles.category_id', '=', 'categories.id')
+            ->join('users','articles.user_id','=','users.id');
+
+         if (!empty($categoryId)) {
             $query->where('articles.category_id', '=', $categoryId);
         }
         if (!empty($search)) {
@@ -43,9 +45,11 @@ class Article extends Model
             $query->where('articles.confirmed', '=', false)
                 ->where('articles.published', '=', false);
         }
-        if (Auth::user()->roles[0]->slug == "secrectory"){
-            $query->where('articles.confirmed', '=', true)
-                ->where('articles.published', '=', false);
+        if (Auth::user()->roles[0]->slug == "secrectary"){
+            $query = $query->where('articles.confirmed', '=', true)
+                ->where('articles.published', '=', false)
+                ->where('categories.user_id', '=', Auth::user()->id);
+
         }
         if (Auth::user()->roles[0]->slug == "author"){
             $query->where('articles.user_id', '=', Auth::user()->id);
