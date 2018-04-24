@@ -250,12 +250,12 @@ class ArticleController extends Controller
 
         if($success){
             return redirect()->route('admin.article.index')
-                ->with('success', 'User has been deleted successfully');
+                ->with('success', 'Article has been deleted successfully');
         }
 
         else{
             return redirect()->route('admin.article.index')
-                ->with('error', 'User not found');
+                ->with('error', 'Article not found');
         }
     }
 

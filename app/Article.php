@@ -29,12 +29,13 @@ class Article extends Model
      * @param int|null $cateType
      * @return Article collection
      */
-    public static function getIndex($search = null, $categoryId = null,$user_id = null)
+    public static function getIndex($search = null, $categoryId = null)
     {
         $query = Article::select('articles.*', 'categories.name as category', 'users.name as author')
             ->join('categories', 'articles.category_id', '=', 'categories.id')
             ->join('users','articles.user_id','=','users.id');
-        if (!empty($categoryId)) {
+
+         if (!empty($categoryId)) {
             $query->where('articles.category_id', '=', $categoryId);
         }
         if (!empty($search)) {
@@ -45,8 +46,10 @@ class Article extends Model
                 ->where('articles.published', '=', false);
         }
         if (Auth::user()->roles[0]->slug == "secrectary"){
-            $query->where('articles.confirmed', '=', true)
-                ->where('articles.published', '=', false);
+            $query = $query->where('articles.confirmed', '=', true)
+                ->where('articles.published', '=', false)
+                ->where('categories.user_id', '=', Auth::user()->id);
+
         }
         if (Auth::user()->roles[0]->slug == "author"){
             $query->where('articles.user_id', '=', Auth::user()->id);

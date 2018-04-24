@@ -18,6 +18,11 @@ class Category extends Model
      * @param obj $categories
      * @return string
      */
+
+    public function articles() {
+        return $this->hasMany('App\Article');
+    }
+
     public static function showCategories($categories, $cateSelected = null)
     {
         if ($categories) {

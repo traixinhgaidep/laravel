@@ -11,21 +11,20 @@
 
             <div class="panel-body">
 
-                {{--@if (session('success'))--}}
-                    {{--<div class="alert alert-success fade in">--}}
-                        {{--<button class="close" data-dismiss="alert">×</button>--}}
-                        {{--<i class="fa-fw fa fa-check"></i>--}}
-                        {{--{{ session('success') }}--}}
-                    {{--</div>--}}
-                {{--@endif--}}
-                {{--@if (session('error'))--}}
-                    {{--<div class="alert alert-danger fade in">--}}
-                        {{--<button class="close" data-dismiss="alert">×</button>--}}
-                        {{--<i class="fa fa-times"></i>--}}
-                        {{--{{ session('error') }}--}}
-                    {{--</div>--}}
-                {{--@endif--}}
-
+                @if (session('success'))
+                    <div class="alert alert-success fade in">
+                        <button class="close" data-dismiss="alert">×</button>
+                        <i class="fa-fw fa fa-check"></i>
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger fade in">
+                        <button class="close" data-dismiss="alert">×</button>
+                        <i class="fa fa-times"></i>
+                        {{ session('error') }}
+                    </div>
+                @endif
 
 
                 @can('article-create')
@@ -116,13 +115,14 @@
                             </td>
                             @can('article-delete')
                                 <td><input class="individual" name="checkbox[]" type="checkbox" value="{{$article -> id}}"></td>
-
                             @endcan
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-                    <input class="btn btn-danger" id="delete-btn" disabled type="submit" onclick="return confirm('Are you sure you want to delete this item?');" value="Delete" style="margin-right: 75px; float: right;">
+                        @can('article-delete')
+                            <input class="btn btn-danger" id="delete-btn" disabled type="submit" onclick="return confirm('Are you sure you want to delete this item?');" value="Delete" style="margin-right: 75px; float: right;">
+                        @endcan
                     </form>
                         <div class="text-center">
                     {{ $articles->render() }}
