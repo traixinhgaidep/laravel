@@ -8,33 +8,46 @@ use App\Http\Controllers\Controller;
 use App\Article;
 use App\Category;
 use Auth;
+use App\Http\Resources\ArticleResource as ArticleResource;
+use App\Http\Resources\ArticlesResource as ArticlesResource;
 
 class ArticleController extends Controller
 {
+
+    public function showIndex(){
+//        return view('admin.article.show-index');
+        $response = file_get_contents('http://192.168.10.10/api/articles');
+        $response = json_decode($response);
+        dd($response);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->get('search');
-        $categoryId = $request->get('category_id');
-        $articles = Article::getIndex($search, $categoryId);
-        $articles->setPath('');
-        $pagination = $articles->appends([
-            'search' => $search,
-            'category_id' =>$categoryId,
-        ]);
-        $categories = Category::all();
-        $categoriesHtml = Category::showCategories($categories, $request->category_id);
-        return view('admin.article.index', [
-            'articles' => $articles,
-            'request' => $request->all(),
-            'pagination'=>$pagination,
-            'categoriesHtml'=> $categoriesHtml,
-        ]);
+        return new ArticlesResource(Article::with(['author'])->paginate(5));
     }
+//    public function index(Request $request)
+//    {
+//        $search = $request->get('search');
+//        $categoryId = $request->get('category_id');
+//        $articles = Article::getIndex($search, $categoryId);
+//        $articles->setPath('');
+//        $pagination = $articles->appends([
+//            'search' => $search,
+//            'category_id' =>$categoryId,
+//        ]);
+//        $categories = Category::all();
+//        $categoriesHtml = Category::showCategories($categories, $request->category_id);
+//        return view('admin.article.index', [
+//            'articles' => $articles,
+//            'request' => $request->all(),
+//            'pagination'=>$pagination,
+//            'categoriesHtml'=> $categoriesHtml,
+//        ]);
+//    }
 
 //        $articles = Article::paginate(Article::PAGINATE_LIMIT);
 //        return view('admin.article.index', ['articles' => $articles]);
@@ -125,10 +138,11 @@ class ArticleController extends Controller
     public function show($id)
     {
         $article = Article::find($id);
-        if (!$article) {
-            return route('admin.article.index')->with('error', "Article not found.");
-        }
-        return view('admin.article.detail', ['article' => $article]);
+//        if (!$article) {
+//            return route('admin.article.index')->with('error', "Article not found.");
+//        }
+//        return view('admin.article.detail', ['article' => $article]);
+        return new ArticleResource($article);
     }
 
     /**

@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function articles(){
+        return $this->hasMany('App\Article');
+    }
+
     public function roles()
     {
         return $this->belongsToMany('App\Role', 'users_roles');

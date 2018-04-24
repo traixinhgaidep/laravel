@@ -18,6 +18,9 @@ class Article extends Model
         'published',
         'reject_flag'
     ];
+    public function author() {
+        return $this->belongsTo('App\User');
+    }
     /**
      * Get Artilces
      *
