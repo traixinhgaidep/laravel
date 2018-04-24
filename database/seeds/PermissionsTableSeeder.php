@@ -124,7 +124,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id' => '19',
                 'name' => 'article-reject',
-                'description' => 'Confirm article',
+                'description' => 'Reject article',
                 'created_at' => Carbon::now(),
             ],
 

@@ -36,7 +36,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Permission','users_permissions');
     }
 
-    public function hasRole( ... $roles) {
+    public function hasRole(...$roles) {
         foreach ($roles as $role) {
             if ($this->roles->contains('slug', $role)) {
                 return true;

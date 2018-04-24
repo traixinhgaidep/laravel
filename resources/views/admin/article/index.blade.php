@@ -6,7 +6,28 @@
             <div class="panel-heading">
                 <h3>Article</h3>
             </div>
+
+
+
             <div class="panel-body">
+
+                {{--@if (session('success'))--}}
+                    {{--<div class="alert alert-success fade in">--}}
+                        {{--<button class="close" data-dismiss="alert">×</button>--}}
+                        {{--<i class="fa-fw fa fa-check"></i>--}}
+                        {{--{{ session('success') }}--}}
+                    {{--</div>--}}
+                {{--@endif--}}
+                {{--@if (session('error'))--}}
+                    {{--<div class="alert alert-danger fade in">--}}
+                        {{--<button class="close" data-dismiss="alert">×</button>--}}
+                        {{--<i class="fa fa-times"></i>--}}
+                        {{--{{ session('error') }}--}}
+                    {{--</div>--}}
+                {{--@endif--}}
+
+
+
                 @can('article-create')
                     <div>
                         <a href="{{ route('admin.article.create') }}">
@@ -31,31 +52,37 @@
                         </div>
                     </form>
                 </div>
+
+                    <form class="" action="{{ route('admin.article.destroy') }}" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+
                 <table class="table table-striped task-table">
                     <thead>
                     <th>Id</th>
                     <th>Title</th>
                     <th>Category</th>
                     <th>Author</th>
-                    <th>Updated Time</th>
+                    {{--<th>Created Time</th>--}}
+
+                    <th>Action</th>
+
+                    @can('article-delete')
+                        <th> <input  type="checkbox" class="selectall">  Check All </th>
+                    @endcan
                     </thead>
                     <tbody>
                     @foreach($articles as $article)
+                        {{--{{dd($article)}}--}}
                         <tr>
                             <td class="table-text">
                                 <div> {{ $article->id }}</div>
                             </td>
                             @can('article-edit')
-                                @role('author')
+
                                 <td class="table-text" >
                                     <a href="{{ route('admin.article.edit', $article->id) }}"><span style="{{$article->reject_flag ? "color:red;": ''}}">{{$article->title}}</span></a>
                                 </td>
-                                @endrole
-                                @role('editor')
-                                <td class="table-text" >
-                                    <a href="{{ route('admin.article.edit', $article->id) }}"><span style="{{$article->reject_flag ? "color:red;": ''}}">{{$article->title}}</span></a>
-                                </td>
-                                @endrole
 
                             @else
                                 <td class="table-text" >
@@ -63,34 +90,41 @@
                                 </td>
                             @endcan
                             <td class="table-text">
-                                <div> {{ $article->name }}</div>
+                                <div> {{ $article->category }}</div>
                             </td>
                             <td class="table-text">
-                                <div> {{ $article->published }}</div>
+                                <div> {{ $article->author }}</div>
                             </td>
-                            <td class="table-text">
-                                <div>{{$article->update_at}}</div>
-                            </td>
+                            {{--<td class="table-text">--}}
+                                {{--<div>{{$article->update_at}}</div>--}}
+                            {{--</td>--}}
                             <td>
-                                @can('article-delete')
-                                    <form class=" visible-lg-inline-block" action="{{ route('admin.article.destroy', $article->id) }}" method="POST">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                        <input class="btn btn-danger btn-xs" type="submit" value="Delete">
-                                    </form>
-                                @endcan
+
                                 @can('article-publish')
                                     <form class=" visible-lg-inline-block" action="{{ route('admin.article.publish', $article->id) }}" method="POST">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                         <input class="btn btn-info btn-xs" type="submit" value="Publish">
                                     </form>
                                 @endcan
+                                {{--@can('article-confirm')--}}
+                                        {{--<form class=" visible-lg-inline-block" action="{{ route('admin.article.publish', $article->id) }}" method="POST">--}}
+                                            {{--<input type="hidden" name="_token" value="{{ csrf_token() }}" />--}}
+                                            {{--<input class="btn btn-info btn-xs" type="submit" value="Confirm">--}}
+                                        {{--</form>--}}
+                                    {{--@endcan--}}
+
                             </td>
+                            @can('article-delete')
+                                <td><input class="individual" name="checkbox[]" type="checkbox" value="{{$article -> id}}"></td>
+
+                            @endcan
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-                <div class="text-center">
+                    <input class="btn btn-danger" id="delete-btn" disabled type="submit" onclick="return confirm('Are you sure you want to delete this item?');" value="Delete" style="margin-right: 75px; float: right;">
+                    </form>
+                        <div class="text-center">
                     {{ $articles->render() }}
                 </div>
             </div>
@@ -98,23 +132,5 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    <script>
-        CKEDITOR.replace( 'content', {
-            filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-            filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-            filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-            filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-            filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-            filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-        } );
-        CKEDITOR.replace( 'comment',{
-            filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-            filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-            filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-            filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-            filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-            filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-        } );
-    </script>
+    <script src="{{ asset('js/backend/articles_list.js') }}"></script>
 @endsection

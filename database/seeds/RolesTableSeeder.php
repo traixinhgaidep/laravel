@@ -21,8 +21,8 @@ class RolesTableSeeder extends Seeder
             ],
             [
                 'id' => '2',
-                'name' => 'Secrectory',
-                'slug' => 'secrectory',
+                'name' => 'Secrectary',
+                'slug' => 'secrectary',
                 'created_at' => Carbon::now(),
             ],
             [

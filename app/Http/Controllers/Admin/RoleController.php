@@ -21,9 +21,6 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::with('permissions')->paginate(Role::PAGINATE_LIMIT);
-        var_dump(gettype($roles));
-        var_dump(gettype(2));
-        ;die();
         return view('admin.role.index', ['roles' => $roles]);
     }
 
@@ -44,7 +41,7 @@ class RoleController extends Controller
 
         }
 //        dd($role);
-//        dd(array_map(function ($a){return $a["id"];}, $role->permissions->toArray()));
+//        dd(array_map(function ($a){return $a["id"];}, $role->permissions->toArray()))
         return view('admin.role.create',[
             'role' =>$role,
             'permissions' => Permission::all(),

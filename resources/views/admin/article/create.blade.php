@@ -62,23 +62,25 @@
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
-                        @can('article-confirm')
-                            <div class="form-group">
+                        @if ($article)
+                            @can('article-confirm')
+                                <div class="form-group">
 
-                                <form class="visible-lg-inline-block" action="{{ route('admin.article.confirm', $article->id ) }}" method="POST">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                    <input class="btn btn-warning" type="submit" onclick="return confirm('Are you sure you want to CONFIRM this article?');" value="Confirm">
-                                </form>
-                            </div>
-                        @endcan
-                        @can('article-reject')
-                            <div class="form-group">
-                                <form class="visible-lg-inline-block" action="{{ route('admin.article.reject', $article->id ) }}" method="POST">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                    <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to REJECT this article?');" value="Reject">
-                                </form>
-                            </div>
-                        @endcan
+                                    <form class="visible-lg-inline-block" action="{{ route('admin.article.confirm', $article->id ) }}" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                        <input class="btn btn-warning" type="submit" onclick="return confirm('Are you sure you want to CONFIRM this article?');" value="Confirm">
+                                    </form>
+                                </div>
+                            @endcan
+                            @can('article-reject')
+                                <div class="form-group">
+                                    <form class="visible-lg-inline-block" action="{{ route('admin.article.reject', $article->id ) }}" method="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                        <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to REJECT this article?');" value="Reject">
+                                    </form>
+                                </div>
+                            @endcan
+                         @endif
                     </div>
                 </div>
             </div>
