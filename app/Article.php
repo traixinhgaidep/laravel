@@ -57,4 +57,24 @@ class Article extends Model
         $query->orderBy('articles.id', 'desc');
         return $query->paginate(self::PAGINATE_LIMIT);
     }
+     public static function getIndexHomePage($search = null, $categoryId = null)
+    {
+        $query = Article::select('articles.*', 'categories.name')
+            ->join('categories', 'articles.category_id', '=', 'categories.id');
+        if (!empty($categoryId)) {
+            $query->where('articles.category_id', '=', $categoryId);
+        }
+        if (!empty($search)) {
+            $query->where('articles.title', 'LIKE', '%'.$search.'%');
+        }
+        $query->where('articles.published', '=', true);
+        
+        $query->orderBy('articles.id', 'desc');
+        return $query->paginate(9);
+    }
+    public static function getById($id)
+    {
+        $article = Article::find($id);   
+        return $article;
+    }
 }
