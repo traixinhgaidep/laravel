@@ -16,7 +16,7 @@
 
                                     <div class="content-artcle">
                                         <i>{{$article->created_at}}</i> 
-                                        <p class="content-text">{{implode(' ', array_slice(explode(' ', $article->content), 0,20))." ..."}}</p>
+                                        <p class="content-text"><?=implode(' ', array_slice(explode(' ', $article->content), 0,20))." ..."?></p>
                                     </div>
                                     <a href="{{route('detail', [ 'id' => $article->id]) }}" class="read-more"><button type="button" class="btn btn-success btn-xs"> ÐỌC TIẾP</button></a>
                                 </div>
