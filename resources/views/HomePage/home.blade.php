@@ -11,7 +11,7 @@
                             <div class="content-box">
                                 <a href="{{route('detail', [ 'slug' => $article->slug]) }}"> <h4 class="title"><b>{{$article->title}}<b></h4> </a>
                                     <div class="image-box">
-                                        <img src="{{ asset($article->thumbnail) }}"/>
+                                        <img class="imgHome" src="{{ asset($article->thumbnail) }}"/>
                                     </div>
 
                                     <div class="content-artcle">

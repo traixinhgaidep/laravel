@@ -72,9 +72,5 @@ class Article extends Model
         $query->orderBy('articles.id', 'desc');
         return $query->paginate(9);
     }
-    public static function getById($id)
-    {
-        $article = Article::find($id);   
-        return $article;
-    }
+    
 }
