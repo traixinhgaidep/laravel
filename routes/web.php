@@ -14,7 +14,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomePage\HomeController@index')->name('home');
-Route::get('/detail', 'HomePage\DetailPageController@index')->name('detail');
+Route::get('/slug', 'HomePage\HomeController@indexDetail')->name('detail');
 Auth::routes();
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
     Route::get('/', 'Admin\AdminController@index')->name('admin.index')->middleware('firstlogin');

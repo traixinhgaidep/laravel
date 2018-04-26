@@ -44,4 +44,17 @@ class HomeController extends Controller
         ]);
         
     }
+    public function indexDetail(Request $request)
+    {
+        $slug = $request->get('slug');
+        $article = Article::where('slug',$slug)->first();
+        $categories = Category::all();      
+        
+        return view('HomePage.detailpage', [
+            'article' => $article,
+            'request' => $request->all(),
+            'categories'=>$categories,
+        ]);
+        
+    }
 }
