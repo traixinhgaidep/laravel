@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -9,13 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomePage\HomeController@index')->name('home');
-Route::get('/slug', 'HomePage\HomeController@indexDetail')->name('detail');
+Route::get('/home', function () {
+    return view('home');
+});
+
 Auth::routes();
+
+
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
     Route::get('/', 'Admin\AdminController@index')->name('admin.index')->middleware('firstlogin');
     Route::group(['prefix' => 'category','middleware' => 'role:root'],function (){
@@ -38,6 +44,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
         Route::post('create', 'Admin\RoleController@createRole')-> name('admin.role.createRole');
         Route::get('edit/{id}', 'Admin\RoleController@edit')->name('admin.role.edit')->middleware('can:role-edit');
         Route::delete('', 'Admin\RoleController@destroy')->name('admin.role.delete')->middleware('can:role-delete');
+
     });
     Route::group(['prefix' => 'articles'] ,function (){
         Route::get('', 'Admin\ArticleController@index')->name('admin.article.index')->middleware('can:article-list');
@@ -48,6 +55,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
         Route::post('/reject/{id}','Admin\ArticleController@reject')->name('admin.article.reject')->middleware('can:article-reject');
         Route::post('/confirm/{id}','Admin\ArticleController@confirm')->name('admin.article.confirm')->middleware('can:article-confirm');
         Route::post('/publish/{id}','Admin\ArticleController@publish')->name('admin.article.publish')->middleware('can:article-publish');
+
+
     });
     Route::group(['prefix' => 'users','middleware' => 'role:root'],function (){
         Route::get('','Admin\UsersController@index')->name('admin.user.index')->middleware('can:user-list');
@@ -58,7 +67,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
     });
     Route::get('change-password', 'Admin\UsersController@getViewChangePassword')->name('admin.user.getviewchangepassword');
     Route::post('change-password', 'Admin\UsersController@changePassword')->name('admin.user.changepassword');
+
     Route::prefix('send-mail')->group(function (){
         Route::get('','HomeController@sendMail')->name('admin.emails.email');
+
     });
 });
