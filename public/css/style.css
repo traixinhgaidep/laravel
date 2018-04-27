@@ -1,0 +1,91 @@
+.main-header{
+   background: #663399;
+   height: 50px;
+}
+.white{
+   color: white;
+}
+.panel-body{
+   background-color: #E6E6FA ;margin-left: 0px;
+   margin-top: 0px;
+   min-height:100vh;
+}
+.detailpage{
+   padding: 60px;
+}
+.detailpage p{
+   text-align:justify;
+   font-size: 15px;
+}
+.title-list{
+   font-size: 20px;
+}
+.title{
+   height: 60px;
+   font-size: 15px;
+}
+.content-artcle{
+   height: 100px;
+}
+.pagination{
+   float: right;
+}
+
+.content-box {
+   margin: 20px 0px;
+   box-shadow: 2px 2px #888888;
+   background: white;
+   border-top: 3px solid #B22222;
+   border-radius: 2px;
+   padding-bottom: 14%;
+   width: 100%;
+}
+.content-text{
+   font-size: 12px;
+}
+.content-box p{
+   text-align:justify;
+   margin: 7px;
+   max-width: 300px;
+}
+.content-box h4{
+   margin: 9px;
+}
+
+.imgHome {
+   border-radius: 2px;
+   position: absolute;
+   display: block;
+   width: 100%;
+   max-height: 100%;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   margin: auto;
+}
+img{
+   width: 100%;
+}
+.image-box {
+   width: 100%;
+   position: relative;
+   /*height: 200px;*/
+   display: block;
+   height: 0;
+   padding: 60.25% 0 0 0;
+   overflow: hidden;
+   margin-bottom: 5px;
+
+
+}
+.read-more{
+   float: right;
+   margin-right: 3px;
+   margin-bottom: 4px;
+}
+.Search {
+   margin-bottom: 50px;
+   margin-top: 50px;
+
+}
