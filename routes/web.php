@@ -72,4 +72,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
         Route::get('','HomeController@sendMail')->name('admin.emails.email');
 
     });
+    
 });
+
+Route::get('artical','frontend\ArticalController@index');
+
+Route::get('artical/get','frontend\ArticalController@get_all_article');

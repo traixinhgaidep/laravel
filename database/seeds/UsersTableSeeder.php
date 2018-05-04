@@ -13,43 +13,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = [
-            [
-                'id' => '1',
+       
+        DB::table('users')->truncate();
+        App\User::create([
+            'id' => '1',
                 'name' => 'root',
                 'email' => 'root@gmail.com',
                 'password' =>  Hash::make('123456'),
                 'first_login' => false,
-                'created_at' => Carbon::now(),
-            ],
-            [
-                'id' => '2',
-                'name' => 'secrectary',
-                'email' => 'secrectary@gmail.com',
-                'password' =>  Hash::make('123456'),
-                'first_login' => false,
-                'created_at' => Carbon::now(),
-            ],
-            [
-                'id' => '3',
-                'name' => 'editor',
-                'email' => 'editor@gmail.com',
-                'password' =>  Hash::make('123456'),
-                'first_login' => false,
-                'created_at' => Carbon::now(),
-            ],
-            [
-                'id' => '4',
-                'name' => 'author',
-                'email' => 'author@gmail.com',
-                'password' =>  Hash::make('123456'),
-                'first_login' => false,
-                'created_at' => Carbon::now(),
-            ],
-        ];
-        DB::table('users')->delete();
-        foreach ($users as $user) {
-            DB::table('users')->insert($user);
-        };
+                'created_at' => Carbon::now()
+        ]);
     }
+    
 }
